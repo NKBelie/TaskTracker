@@ -88,6 +88,30 @@
 
             renderTasks();
         }
+        function renderTasks() {
+            const container = document.getElementById("taskList");
+            container.innerHTML = "";
+
+            tasks.forEach(task => {
+                container.innerHTML += `
+                <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-5
+                            hover:shadow-xl hover:-translate-y-1 transition duration-300">
+
+                    <h4 class="text-lg font-bold text-gray-800">${task.name}</h4>
+
+                    <p class="text-sm text-gray-500 mt-2">
+                    Due: <span class="font-medium text-indigo-600">${task.date}</span>
+                    </p>
+
+                    <button onclick="deleteTask(${task.id})"
+                    class="mt-4 w-full bg-red-50 text-red-600 py-2 rounded-xl
+                            hover:bg-red-100 transition font-semibold">
+                    Delete Task
+                    </button>
+                </div>
+                `;
+            });
+        }
 </script>
 </body>
 </html>

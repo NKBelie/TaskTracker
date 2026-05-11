@@ -5,8 +5,23 @@ const sunIcon = '<path stroke-linecap="round" stroke-linejoin="round" stroke-wid
 
 window.onload = function () {
     loadTheme();
+    setMinimumDueDate();
     renderTasks();
 };
+
+function getTodayDateString() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+}
+
+function setMinimumDueDate() {
+    const dateInput = document.getElementById("dateInput");
+    dateInput.min = getTodayDateString();
+}
 
 function addTask() {
     const taskInput = document.getElementById("taskInput");
@@ -17,6 +32,13 @@ function addTask() {
     const date = dateInput.value;
 
     if (!name || !date) {
+        error.textContent = "Please fill in both task and due date";
+        error.classList.remove("hidden");
+        return;
+    }
+
+    if (date < getTodayDateString()) {
+        error.textContent = "Due date cannot be in the past";
         error.classList.remove("hidden");
         return;
     }
